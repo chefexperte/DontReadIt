@@ -1,7 +1,8 @@
 import os
-import re, sys
-from os.path import exists
+import re
+import sys
 from io import open
+from os.path import exists
 
 from newspaper import Article
 
@@ -32,5 +33,9 @@ if len(sys.argv) == 2:
     print("saving article")
     get_article(sys.argv[1])
     print("finished")
+elif len(sys.argv) >= 2:
+    print("saving articles")
+    for article in sys.argv[1:]:
+        get_article(article)
 else:
     print("wrong number of arguments")
