@@ -1,0 +1,25 @@
+A FOUR-TONNE chunk of a SpaceX rocket is on a collision course with the Moon, according to online space junk trackers.
+The out-of-control booster was launched from Florida in February 2015 as part of the rocket firm's first interplanetary mission.
+2
+ArsTechnica reports that the Falcon 9 second stage completed a long burn of its engines before deploying the NOAA's Deep Space Climate Observatory on a journey to a point more than 1 million km from Earth.
+It did not have enough fuel left to take it back into Earth's atmosphere, leaving it on a chaotic orbit around our planet.
+Now, space trackers have calculated that the rocket part's will intersect with the Moon at 2.58 kilometres per second within weeks.
+The impact is estimated to occur on March 4, 2022, according to Bill Gray, who writes the popular Project Pluto software to track near-Earth objects.
+"This is the first unintentional case [of space junk hitting the Moon] of which I am aware," Gray wrote last week.
+The astronomer recently put out a call to space-watchers to make observations of the booster to help refine his calculations.
+What is SpaceX? Here's what you need to know... SpaceX is a cash-flushed rocket company that wants to take man to Mars. It was set up by eccentric billionaire Elon Musk in 2002 and is based in Hawthorne, California. SpaceX's first aim was to build rockets that can autonomously land back on Earth for refurbishment and re-use. The technology makes launching and operating space flights more efficient, and therefore cheaper. SpaceX currently uses its reusable Falcon 9 and Falcon Heavy rockets to fly cargo to the International Space Station (ISS) for Nasa. It also carries satellites and other space tech into orbit for various government agencies and multinational companies. The company took astronauts to the ISS for the first time in 2020 and flew its first all-civilian crew there a year later. Future missions will fly tourists and astronauts to the Moon and Mars. Musk has repeatedly said he believes humanity must colonise Mars to save itself from extinction. He plans to get a SpaceX rocket to the Red Planet by 2027.
+He's hoping to nail down the exact time of the crash ahead of schedule.
+Unfortunately, it won't be possible to see the impact live as the tumbling rocket part is expected to hit the Moon's far side – the part that faces away from Earth.
+Instead, astronomers will rely on images snapped by satellites including Nasa's Lunar Reconnaissance Orbiter to view the aftermath of the crash.
+By analysing the resulting crater, scientists hope to observe subsurface material ejected by the crash to shed light on the Moon's composition.
+As part of its LCROSS mission, in 2009 Nasa deliberately smashed a rocket booster into the Moon in hopes of learning something from the debris it left behind.
+"In essence, this is a "free" LCROSS… except we probably won't see the impact," Gray wrote.
+SpaceX's 2015 mission, dubbed DSCOVR, was its first to leave Earth's orbit, meaning the rocket's second stage couldn't be directed into the atmosphere.
+That tactic is regularly used by the company and Western space agencies to reduce debris by ensuring that it burns up as opposed to remaining in orbit.
+2 A Falcon 9 lifts off from SpaceX’s Launch Complex 40 at Cape Canaveral Air Force Station, Florida, on February 11, 2015 Credit: SpaceX
+Elon Musk SpaceX rocket that will take humans to Mars filmed in testing
+In other news, Boeing has sunk $450million into a flying taxi startup that hopes to whisk passengers across cities by the end of the decade.
+Personalised smart guns, which can be fired only by verified users, may finally become available to U.S. consumers this year.
+Scientists are embarking on a mission to unravel the mystery behind dozens of grisly child mummies buried in an underground tomb in Sicily.
+And, police have caught an Italian mafia henchman who'd be on the run for 20 years after spotting the fugitive on Google Maps.
+We pay for your stories! Do you have a story for The Sun Online Tech & Science team? Email us at tech@the-sun.co.uk
