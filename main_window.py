@@ -1,30 +1,54 @@
+from os.path import exists
+
 import gi
+
 from statics import VERSION_CODE
 
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk
-
-
-class ColoredButton(Gtk.Button):
-    def override_color(*args, **kwargs):
-        pass
-# ok
+from gi.repository import Gtk, Gdk, Gio
 
 
 class TrainingWindow:
     window = Gtk.Window()
+    result = ""
 
     def __init__(self):
         pass
 
-    def add_sentences(self, sentences: list[str]):
+    def add_sentences(self, sentences: list[str]) -> list[Gtk.CheckButton]:
+        check_boxes = []
         for sentence in sentences:
             box = Gtk.Box(spacing=5)
-            box.add(Gtk.CheckButton())
-            box.add(Gtk.Label(label=sentence))
+            label = Gtk.Label(label=sentence)
+            check_box = Gtk.CheckButton()
+            label_box = Gtk.EventBox()
+            label_box.connect("button-press-event", self.box_clicked, check_box)
+            label_box.add(label)
+            box.add(check_box)
+            box.add(label_box)
             self.boxes.add(box)
-        submit = ColoredButton(label="Submit")
-        self.boxes.add(submit)
+            check_boxes.append(check_box)
+        button_box = Gtk.Box(spacing=10)
+        submit = Gtk.Button(label="Submit")
+        submit.get_style_context().add_class("green")
+        submit.connect("clicked", self.submit, check_boxes)
+        reset = Gtk.Button(label="Reset")
+        reset.get_style_context().add_class("red")
+        reset.connect("clicked", self.uncheck_all, check_boxes)
+        button_box.add(submit)
+        button_box.add(reset)
+        self.boxes.add(button_box)
+        return check_boxes
+
+    def box_clicked(self, widget, event, check_box: Gtk.CheckButton):
+        check_box.set_active(not check_box.get_active())
+
+    def uncheck_all(self, b, check_boxes: list[Gtk.CheckButton]):
+        for button in check_boxes:
+            button.set_active(False)
+
+    def submit(self, b, check_boxes: list[Gtk.CheckButton]):
+        result = ""
 
     def show_window(self):
         self.window.show_all()
@@ -43,6 +67,13 @@ class TrainingWindow:
 
     boxes = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
     scroll.add(boxes)
+
+    if exists("styles.css"):
+        css_provider = Gtk.CssProvider()
+        css_provider.load_from_path("./styles.css")
+        context = Gtk.StyleContext()
+        screen = Gdk.Screen.get_default()
+        context.add_provider_for_screen(screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
     """
     item1 = Gtk.Button(label="KNOPF")

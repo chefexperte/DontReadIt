@@ -1,0 +1,21 @@
+.red {
+    background: #d92b2b;
+}
+.red:hover {
+    background: #ad2222;
+}
+.red:active {
+    background: #751616;
+}
+
+.green {
+    color: #2c2a2a;
+    text-shadow: none;
+    background: #3cd92b;
+}
+.green:hover {
+    background: #3bad22;
+}
+.green:active {
+    background: #207516;
+}
