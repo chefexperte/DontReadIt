@@ -2,20 +2,27 @@ from os.path import exists
 
 import gi
 
+import regression_calc
+import vector_creator
 from statics import VERSION_CODE
 
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, Gio
+from gi.repository import Gtk, Gdk
 
 
 class TrainingWindow:
     window = Gtk.Window()
     result = ""
+    sentence_list = []
+    weights = []
+    callback = 0
 
-    def __init__(self):
-        pass
+    def __init__(self, weights: list, callback):
+        self.weights = weights
+        self.callback = callback
 
     def add_sentences(self, sentences: list[str]) -> list[Gtk.CheckButton]:
+        self.sentence_list = sentences
         check_boxes = []
         for sentence in sentences:
             box = Gtk.Box(spacing=5)
@@ -48,7 +55,13 @@ class TrainingWindow:
             button.set_active(False)
 
     def submit(self, b, check_boxes: list[Gtk.CheckButton]):
-        result = ""
+        for i in range(len(self.sentence_list)):
+            creator = vector_creator.VectorCreator(self.sentence_list[i])
+            sentence_vec = creator.create_sentence_vec()
+            s = regression_calc.sigmoid(sentence_vec, self.weights)
+            self.weights = regression_calc.update_weights(sentence_vec, self.weights, s, check_boxes[i].get_active())
+        self.callback(self.weights)
+        Gtk.main_quit()
 
     def show_window(self):
         self.window.show_all()
