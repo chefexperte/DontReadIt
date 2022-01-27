@@ -7,36 +7,55 @@ from os.path import exists
 from newspaper import Article
 
 
-def get_article_local(title: str):
-    title = title.replace(" ", "") + ".txt"
+def get_article_local(file_name: str):
+    """
+
+    :param file_name: The name of the file the article is stored in
+    :return: Returns the title and the text of the article
+    """
+    file_name = file_name.replace(" ", "") + ".txt"
+    file_name = file_name.replace(".txt.txt", ".txt")
+    title = None
     text = ""
     if not os.path.exists("articles/"):
         os.mkdir("articles/")
-    if exists("articles/" + title):
-        for line in open("articles/" + title).readlines():
-            text += line
-    return text
+    if exists("articles/" + file_name):
+        for line in open("articles/" + file_name).readlines():
+            if title is None:
+                title = line
+            else:
+                text += line
+    else:
+        print("Error opening file " + file_name)
+    title = title.replace("\n", "")
+    return title, text
 
 
 def get_article_from_url(url: str):
     art = Article(url, language="en")
-    title = re.match(r"https://(?:.*/)*([^/]+)", url).group(1)
-    print(title)
-    title = title.replace(" ", "") + ".txt"
+    file_name = re.match(r"https://(?:.*/)*([^/]+)", url).group(1)
+    print(file_name)
+    file_name = file_name.replace(" ", "") + ".txt"
     text = ""
+    title = ""
     if not os.path.exists("articles/"):
         os.mkdir("articles/")
-    if not exists("articles/" + title):
+    if not exists("articles/" + file_name):
         art.download()
         art.parse()
         text = art.text
+        title = art.title
         text = text.replace("\n\n", "\n")
-        open("articles/" + title, mode="w").writelines(text)
+        open("articles/" + file_name, mode="w").writelines(art.title + "\n" + text)
     else:
-        for line in open("articles/" + title).readlines():
-            text += line
+        for line in open("articles/" + file_name).readlines():
+            if title == "":
+                title = line
+            else:
+                text += line
     text = text.replace("\n\n", "\n")
-    return text
+    title = title.replace("\n", "")
+    return title, text
 
 
 if __name__ == "__init__":
