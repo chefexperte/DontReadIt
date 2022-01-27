@@ -11,18 +11,34 @@ from gi.repository import Gtk, Gdk
 
 
 class TrainingWindow:
-    window = Gtk.Window()
     result = ""
-    sentence_list = []
-    weights = []
-    callback = 0
+    callback = None
+    close_callback = None
+    title = ""
 
-    def __init__(self, weights: list, callback):
+    def __init__(self, weights: list, finish_callback, close_callback):
         self.weights = weights
-        self.callback = callback
+        self.callback = finish_callback
+        self.close_callback = close_callback
+        self.sentence_list = []
+        self.window = Gtk.Window()
+        self.window.set_title("Don't Read It {}".format(VERSION_CODE))
+        self.window.resize(1080, 720)
+        scroll = Gtk.ScrolledWindow()
+        scroll.set_margin_left(10)
+        scroll.set_margin_top(10)
+        scroll.set_margin_bottom(10)
+        scroll.set_margin_right(10)
+        self.window.add(scroll)
+        self.boxes = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        scroll.add(self.boxes)
 
-    def add_sentences(self, sentences: list[str]) -> list[Gtk.CheckButton]:
+    def add_sentences(self, sentences: list[str], title: str) -> list[Gtk.CheckButton]:
         self.sentence_list = sentences
+        t_label = Gtk.Label(label=title)
+        t_label.set_alignment(-1, Gtk.Align.START)
+        self.boxes.add(t_label)
+        self.title = title
         check_boxes = []
         for sentence in sentences:
             box = Gtk.Box(spacing=5)
@@ -42,8 +58,12 @@ class TrainingWindow:
         reset = Gtk.Button(label="Reset")
         reset.get_style_context().add_class("red")
         reset.connect("clicked", self.uncheck_all, check_boxes)
+        skip = Gtk.Button(label="Skip")
+        skip.get_style_context().add_class("red")
+        skip.connect("clicked", self.skip)
         button_box.add(submit)
         button_box.add(reset)
+        button_box.add(skip)
         self.boxes.add(button_box)
         return check_boxes
 
@@ -56,30 +76,28 @@ class TrainingWindow:
 
     def submit(self, b, check_boxes: list[Gtk.CheckButton]):
         for i in range(len(self.sentence_list)):
-            creator = vector_creator.VectorCreator(self.sentence_list[i])
+            sentence = self.sentence_list[i][0].lower() + self.sentence_list[i][1:]
+            creator = vector_creator.VectorCreator(sentence, self.title)
             sentence_vec = creator.create_sentence_vec()
             s = regression_calc.sigmoid(sentence_vec, self.weights)
             self.weights = regression_calc.update_weights(sentence_vec, self.weights, s, check_boxes[i].get_active())
-        self.callback(self.weights)
+        self.callback(self.weights, self.title, True)
+        self.window.destroy()
+        Gtk.main_quit()
+
+    def skip(self, b):
+        self.callback(self.weights, self.title, False)
+        self.window.destroy()
         Gtk.main_quit()
 
     def show_window(self):
         self.window.show_all()
-        self.window.connect("destroy", Gtk.main_quit)
+        self.window.connect("destroy", self.request_close)
         Gtk.main()
 
-    window.set_title("Don't Read It {}".format(VERSION_CODE))
-    window.resize(1080, 720)
-
-    scroll = Gtk.ScrolledWindow()
-    scroll.set_margin_left(10)
-    scroll.set_margin_top(10)
-    scroll.set_margin_bottom(10)
-    scroll.set_margin_right(10)
-    window.add(scroll)
-
-    boxes = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-    scroll.add(boxes)
+    def request_close(self, x):
+        self.close_callback()
+        Gtk.main_quit()
 
     if exists("styles.css"):
         css_provider = Gtk.CssProvider()
