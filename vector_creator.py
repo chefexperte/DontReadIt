@@ -80,9 +80,9 @@ class VectorCreator:
     def create_sentence_vec(self):
         # 8 attributes, all words and NOT the bias
         vec_size = 8 + statics.TOTAL + 0
-        vector = [self.WORD_COUNT, self.DISTINCT_WORD_COUNT / self.WORD_COUNT, self.PUNCT, self.COMMAS, self.NOUNS,
-                  self.VERBS,
-                  self.ADJECTIVES, self.TO_BE, self.WORDS_FROM_TITLE]
+        vector = [self.WORD_COUNT/10, self.DISTINCT_WORD_COUNT / self.WORD_COUNT, self.PUNCT, self.COMMAS,
+                  self.NOUNS / self.WORD_COUNT, self.VERBS / self.WORD_COUNT, self.ADJECTIVES / self.WORD_COUNT,
+                  self.TO_BE, self.WORDS_FROM_TITLE]
         for i in range(8, vec_size):
             vector.append(self.WORD_LIST.count(statics.ALL_WORDS[i - 8]))
         # print_vector(vector)
@@ -121,7 +121,7 @@ def print_vector_names(weight_list: list[float]):
     for i in range(9):
         print(attributes[i] + ": " + str(weight_list[i]))
     for i in range(9, len(weight_list) - 1):
-        threshold = 0.05
-        if weight_list[i] >= threshold:
+        threshold = 0.15
+        if abs(weight_list[i]) >= threshold:
             print(i, ": ", statics.ALL_WORDS[i - 9], ": ", weight_list[i])
     print("bias: " + str(weight_list[-1]))

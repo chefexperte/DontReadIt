@@ -8,7 +8,7 @@ word lists from
 
 VERSION_CODE = "0.0.1"
 
-LEARNING_RATE = 0.1
+LEARNING_RATE = 0.005
 
 NOUNS = []
 VERBS = []

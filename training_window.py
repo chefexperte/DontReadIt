@@ -61,9 +61,13 @@ class TrainingWindow:
         skip = Gtk.Button(label="Skip")
         skip.get_style_context().add_class("red")
         skip.connect("clicked", self.skip)
+        auto_eval = Gtk.Button(label="Automatic Eval")
+        auto_eval.get_style_context().add_class("green")
+        auto_eval.connect("clicked", self.eval, check_boxes)
         button_box.add(submit)
         button_box.add(reset)
         button_box.add(skip)
+        button_box.add(auto_eval)
         self.boxes.add(button_box)
         return check_boxes
 
@@ -90,9 +94,17 @@ class TrainingWindow:
         self.window.destroy()
         Gtk.main_quit()
 
+    def eval(self, b, check_boxes: list[Gtk.CheckButton]):
+        for i in range(len(self.sentence_list)):
+            sentence = self.sentence_list[i][0].lower() + self.sentence_list[i][1:]
+            creator = vector_creator.VectorCreator(sentence, self.title)
+            sentence_vec = creator.create_sentence_vec()
+            s = regression_calc.sigmoid(sentence_vec, self.weights)
+            check_boxes[i].set_active(s > 0.5)
+
     def show_window(self):
         self.window.show_all()
-        self.window.connect("destroy", self.request_close)
+        self.window.connect("destroy", Gtk.main_quit)
         Gtk.main()
 
     def request_close(self, x):
