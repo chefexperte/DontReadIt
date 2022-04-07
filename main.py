@@ -6,6 +6,7 @@ import regression_calc
 import tokenizer
 import vector_creator
 import statics
+from no_articles_popup import NoArticlesPopup
 from training_window import TrainingWindow
 
 word_resources = "word_resources/"
@@ -87,7 +88,14 @@ if __name__ == "__main__":
     # window = TrainingWindow(weights, on_finish)
     # window.add_sentences(sentences, "This is a useful important sentence.")
     # window.show_window()
+    if not exists("articles"):
+        os.mkdir("articles")
     article_list = os.listdir("articles/")
+
+    if len(article_list) == 0:
+        popup = NoArticlesPopup()
+        popup.show_window()
+
     done_list = []
     if not exists("eval_list"):
         open("eval_list", "w").write("")
