@@ -1,7 +1,6 @@
 import os
 from os.path import exists
 from time import sleep
-
 import get_article
 import regression_calc
 import tokenizer

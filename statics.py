@@ -20,4 +20,4 @@ EXTRAS = []
 ALL_WORDS = []
 
 
-TOTAL = []
+TOTAL = 0
